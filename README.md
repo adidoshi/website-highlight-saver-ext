@@ -63,3 +63,19 @@
 ## Screen Record Video
 
 [![Watch Demo](./src/assets/video_preview.png)](https://jumpshare.com/s/8dXvE8POrPmgwOeCww3I)
+
+> User can highlight text on any website and highlight popper button would appear which then by clicking it will get saved.
+
+## Screen shots
+
+![App Demo](./src/assets/summarize_with_ai_preview.png)
+
+> Saved highlights get saved to the chrome extension into a list from where user can visit the website from where the text was saved, deleted highlighted text.
+
+![App Demo](./src/assets/openai_key_input_preview.png)
+
+> For the first time when user clicks on Summarize with AI button user will get redirected to the OpenAI API key insertion & if correct will get saved to the extention storage.
+
+![App Demo](./src/assets/saved_highlights_preview.png)
+
+Finally when user when clicks on Summarize with AI again, this time API hits and in response summrized text is updated in the UI.
