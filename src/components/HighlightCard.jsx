@@ -28,7 +28,7 @@ export const HighlightCard = ({
             className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center gap-1 truncate"
           >
             <span className="truncate">{highlight.pageTitle}</span>
-            <ExternalLink className="w-3 h-3 flex-shrink-0" />
+            <ExternalLink className="w-3 h-3 shrink-0" />
           </a>
           <p className="text-xs text-gray-500 mt-1">
             {formatDate(highlight.timestamp)}
@@ -36,7 +36,7 @@ export const HighlightCard = ({
         </div>
         <button
           onClick={() => onDelete(highlight.id)}
-          className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors flex-shrink-0"
+          className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors shrink-0"
           title="Delete highlight"
         >
           <Trash2 className="w-4 h-4" />
