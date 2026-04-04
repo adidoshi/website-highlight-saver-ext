@@ -59,3 +59,7 @@
 - Your OpenAI API key (if provided) is also stored locally
 - The extension works on all websites
 - Highlights are organized with the most recent first
+
+## Screen Record Video
+
+[![Watch Demo](./assets/video_preview.png)](https://jumpshare.com/s/8dXvE8POrPmgwOeCww3I)

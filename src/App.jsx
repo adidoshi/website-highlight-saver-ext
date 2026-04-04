@@ -75,18 +75,18 @@ function App() {
 
   if (loading) {
     return (
-      <div className="w-[400px] h-[500px] bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+      <div className="w-100 h-125 bg-linear-to-br from-blue-50 to-purple-50 flex items-center justify-center">
         <div className="animate-pulse text-purple-600">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="w-[400px] h-[500px] bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col">
+    <div className="w-100 h-125 bg-linear-to-br from-blue-50 to-purple-50 flex flex-col">
       <div className="bg-white shadow-sm border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-2 rounded-lg">
+            <div className="bg-linear-to-br from-blue-500 to-purple-600 p-2 rounded-lg">
               <Highlighter className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -109,7 +109,7 @@ function App() {
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {highlights.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center px-8">
-            <div className="bg-gradient-to-br from-blue-100 to-purple-100 p-4 rounded-full mb-4">
+            <div className="bg-linear-to-br from-blue-100 to-purple-100 p-4 rounded-full mb-4">
               <Highlighter className="w-8 h-8 text-purple-600" />
             </div>
             <h2 className="text-lg font-semibold text-gray-900 mb-2">
