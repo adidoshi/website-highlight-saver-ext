@@ -62,4 +62,4 @@
 
 ## Screen Record Video
 
-[![Watch Demo](./assets/video_preview.png)](https://jumpshare.com/s/8dXvE8POrPmgwOeCww3I)
+[![Watch Demo](./src/assets/video_preview.png)](https://jumpshare.com/s/8dXvE8POrPmgwOeCww3I)
