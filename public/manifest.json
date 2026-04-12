@@ -1,28 +1,32 @@
 {
   "manifest_version": 3,
-  "name": "Website Highlight Saver",
+  "name": "Conservo - Highlight & Summarize Webpages",
   "version": "1.0.0",
-  "description": "Save and manage text highlights from any webpage",
-  "permissions": ["storage", "activeTab"],
+  "description": "Save, manage, and summarize webpage highlights the AI way",
+  "permissions": ["storage"],
   "host_permissions": ["https://api.openai.com/*"],
   "action": {
     "default_popup": "index.html",
     "default_icon": {
-      "16": "icon16.svg",
-      "48": "icon48.svg",
-      "128": "icon128.svg"
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
     }
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": [
+        "https://chromewebstore.google.com/*",
+        "https://chrome.google.com/webstore/*"
+      ],
       "js": ["content.js"],
       "css": ["content.css"]
     }
   ],
   "icons": {
-    "16": "icon16.svg",
-    "48": "icon48.svg",
-    "128": "icon128.svg"
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   }
 }

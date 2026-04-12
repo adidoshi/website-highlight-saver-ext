@@ -56,9 +56,23 @@
 ## Notes
 
 - All highlights are stored locally in your browser
-- Your OpenAI API key (if provided) is also stored locally
+- Your OpenAI API key (if provided) is stored in extension storage (session storage by default)
 - The extension works on all websites
 - Highlights are organized with the most recent first
+
+## Privacy & Data Handling
+
+- The extension reads only user-selected text when you highlight content and click save.
+- Saved highlights are stored in Chrome extension storage on your device.
+- If you choose to use AI summaries, selected highlight text is sent to OpenAI only when you click "Summarize with AI".
+- Your API key is used only for direct OpenAI requests and is not sent to any other service.
+- The extension has no remote database and no tracking/analytics.
+
+## Chrome Permissions Used
+
+- `storage`: save highlights and optional API key.
+- Content script on `http://*/*` and `https://*/*`: detect user text selection and show save popup.
+- `https://api.openai.com/*` host permission: call OpenAI API for optional summaries.
 
 ## Screen Record Video
 

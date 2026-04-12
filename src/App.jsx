@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Highlighter, Settings } from "lucide-react";
 import {
   getHighlights,
@@ -16,29 +16,68 @@ function App() {
   const [apiKey, setApiKey] = useState("");
   const [summarizingId, setSummarizingId] = useState(null);
 
-  useEffect(() => {
-    loadHighlights();
-    loadApiKey();
-  }, []);
+  const getApiKeyStorageArea = () => {
+    if (typeof chrome === "undefined" || !chrome.storage) return null;
+    return chrome.storage.session || chrome.storage.local;
+  };
 
-  const loadHighlights = async () => {
+  const loadHighlights = useCallback(async () => {
     const savedHighlights = await getHighlights();
     setHighlights(savedHighlights);
     setLoading(false);
-  };
+  }, []);
 
-  const loadApiKey = () => {
-    if (typeof chrome === "undefined" || !chrome.storage?.local) return;
-    chrome.storage.local.get(["openai_api_key"], (result) => {
+  const loadApiKey = useCallback(() => {
+    const storageArea = getApiKeyStorageArea();
+    if (!storageArea) return;
+
+    storageArea.get(["openai_api_key"], (result) => {
       if (result.openai_api_key) {
         setApiKey(result.openai_api_key);
+        return;
+      }
+
+      // One-time migration path for users who previously stored keys in local.
+      if (storageArea !== chrome.storage.local) {
+        chrome.storage.local.get(["openai_api_key"], (localResult) => {
+          if (localResult.openai_api_key) {
+            storageArea.set(
+              { openai_api_key: localResult.openai_api_key },
+              () => {
+                chrome.storage.local.remove(["openai_api_key"]);
+                setApiKey(localResult.openai_api_key);
+              },
+            );
+          }
+        });
       }
     });
-  };
+  }, []);
+
+  useEffect(() => {
+    loadHighlights();
+    loadApiKey();
+  }, [loadHighlights, loadApiKey]);
+
+  useEffect(() => {
+    if (typeof chrome === "undefined" || !chrome.storage?.onChanged) return;
+
+    const onStorageChanged = (changes, areaName) => {
+      if (areaName !== "local") return;
+      if (!changes.highlights) return;
+      setHighlights(changes.highlights.newValue || []);
+      setLoading(false);
+    };
+
+    chrome.storage.onChanged.addListener(onStorageChanged);
+    return () => {
+      chrome.storage.onChanged.removeListener(onStorageChanged);
+    };
+  }, []);
 
   const handleDelete = async (id) => {
     await deleteHighlight(id);
-    setHighlights(highlights.filter((h) => h.id !== id));
+    setHighlights((prev) => prev.filter((h) => h.id !== id));
   };
 
   const handleSummarize = async (id, text) => {
@@ -51,8 +90,8 @@ function App() {
     try {
       const summary = await generateSummary(text, apiKey);
       await updateHighlight(id, { summary });
-      setHighlights(
-        highlights.map((h) => (h.id === id ? { ...h, summary } : h)),
+      setHighlights((prev) =>
+        prev.map((h) => (h.id === id ? { ...h, summary } : h)),
       );
     } catch (error) {
       alert(error?.message || "Failed to generate summary.");
@@ -62,14 +101,31 @@ function App() {
   };
 
   const handleSaveApiKey = (key) => {
-    if (typeof chrome === "undefined" || !chrome.storage?.local) {
+    const storageArea = getApiKeyStorageArea();
+    if (!storageArea) {
       setApiKey(key);
       setShowApiKeyModal(false);
       return;
     }
-    chrome.storage.local.set({ openai_api_key: key }, () => {
+
+    storageArea.set({ openai_api_key: key }, () => {
       setApiKey(key);
       setShowApiKeyModal(false);
+    });
+  };
+
+  const handleClearApiKey = () => {
+    const storageArea = getApiKeyStorageArea();
+    if (!storageArea) {
+      setApiKey("");
+      return;
+    }
+
+    storageArea.remove(["openai_api_key"], () => {
+      if (storageArea !== chrome.storage.local) {
+        chrome.storage.local.remove(["openai_api_key"]);
+      }
+      setApiKey("");
     });
   };
 
@@ -136,6 +192,8 @@ function App() {
       {showApiKeyModal && (
         <ApiKeyModal
           onSave={handleSaveApiKey}
+          onClear={handleClearApiKey}
+          hasApiKey={Boolean(apiKey)}
           onClose={() => setShowApiKeyModal(false)}
         />
       )}
