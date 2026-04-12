@@ -7,7 +7,7 @@ function removePopup() {
   }
 }
 
-function showSavePopup(x, y, selectedText, range) {
+function showSavePopup(x, y, selectedText) {
   removePopup();
 
   savePopup = document.createElement("div");
@@ -38,7 +38,7 @@ function showSavePopup(x, y, selectedText, range) {
   document.body.appendChild(savePopup);
 }
 
-document.addEventListener("mouseup", (e) => {
+document.addEventListener("mouseup", () => {
   setTimeout(() => {
     const selection = window.getSelection();
     const selectedText = selection.toString().trim();
@@ -49,7 +49,7 @@ document.addEventListener("mouseup", (e) => {
       const x = rect.left + rect.width / 2;
       const y = rect.top + window.scrollY;
 
-      showSavePopup(x, y, selectedText, range);
+      showSavePopup(x, y, selectedText);
     } else {
       removePopup();
     }
