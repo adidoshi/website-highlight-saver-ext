@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Key, X } from "lucide-react";
 
-export const ApiKeyModal = ({ onSave, onClose }) => {
+export const ApiKeyModal = ({ onSave, onClose, onClear, hasApiKey }) => {
   const [apiKey, setApiKey] = useState("");
 
   const handleSubmit = (e) => {
@@ -30,7 +30,7 @@ export const ApiKeyModal = ({ onSave, onClose }) => {
 
         <p className="text-sm text-gray-600 mb-4">
           Enter your OpenAI API key to enable AI summaries. Your key is stored
-          locally and never shared.
+          in extension storage and used only for direct requests to OpenAI.
         </p>
 
         <form onSubmit={handleSubmit}>
@@ -50,6 +50,15 @@ export const ApiKeyModal = ({ onSave, onClose }) => {
             >
               Cancel
             </button>
+            {hasApiKey && (
+              <button
+                type="button"
+                onClick={onClear}
+                className="px-4 py-2 text-red-700 bg-red-50 hover:bg-red-100 rounded-lg transition-colors font-medium"
+              >
+                Clear Key
+              </button>
+            )}
             <button
               type="submit"
               className="flex-1 px-4 py-2 text-white bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors font-medium"
