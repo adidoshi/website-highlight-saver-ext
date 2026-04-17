@@ -1,4 +1,18 @@
-# Website Highlight Saver - Chrome Extension Setup
+# Conservo - Highlight & Summarize Webpages
+
+#### Google Chrome Extention
+
+### What it does?
+
+A simple and powerful browser extension that lets you highlight text on any webpage, save | manage it, and generate concise summaries using AI.
+
+### Architecture
+
+### Results
+
+### Technical Descisions
+
+### Running locally
 
 ## Building the Extension
 
