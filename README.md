@@ -6,15 +6,23 @@
 
 A simple and powerful browser extension that lets you highlight text on any webpage, save | manage it, and generate concise summaries using AI.
 
-### Architecture
+### Architecture:
 
-### Results
+This extension has 3 small parts working together.
+
+1. A content script runs on webpages and detects when the user selects text, then shows a small save popup.
+2. The popup app is a React UI that lists saved highlights, lets the user delete them, and triggers AI summaries.
+3. Small utility layer handles chrome storage and OpenAI requests, so the UI stays clean and focused on interaction. Highlights & OpenAI key is stored in extention storage.
+
+### Results:
+
+Real time use case, extention uploaded to chrome extention store.
 
 ### Technical Descisions
 
-### Running locally
+One of the challenge was handling text selection and correctly positioning the popup across different webpages. Since Chrome extensions work with content scripts, I had to use the Selection API and calculate positions dynamically using bounding rectangles. Ensuring the popup appeared correctly across different layouts and scroll positions required careful handling and debugging.
 
-## Building the Extension
+### Running locally
 
 1. Install dependencies:
 
@@ -39,7 +47,7 @@ A simple and powerful browser extension that lets you highlight text on any webp
 
 5. The extension should now appear in your extensions list
 
-## Using the Extension
+## Steps to use the extention:
 
 ### Saving Highlights
 
